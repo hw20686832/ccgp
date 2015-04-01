@@ -19,5 +19,5 @@ class CcgpPipeline(object):
 
     def process_item(self, item, spider):
         rs = self.db.insert("insert into base(title, zone, content, publish_time) values(%s, %s, %s, %s)", 
-                       (item['title'], item['zone'], item['content'], item['publish_time']))
+                       item['title'], item['zone'], item['content'], item['publish_time'])
         return rs
