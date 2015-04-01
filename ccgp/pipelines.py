@@ -10,8 +10,8 @@ import torndb
 
 class CcgpPipeline(object):
     def __init__(self, settings):
-        self.redis = redis.Redis(**settings.REDIS)
-        self.db = torndb.Connection(**settings.DATABASE)
+        self.redis = redis.Redis(**settings.get('REDIS'))
+        self.db = torndb.Connection(**settings.get('DATABASE'))
 
     @classmethod
     def from_settings(cls, settings):
