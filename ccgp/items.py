@@ -11,7 +11,7 @@ import scrapy
 class CcgpItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    title = scrapy.Item()
-    publish_time = scrapy.Item()
-    zone = scrapy.Item()
-    content = scrapy.Item()
+    title = scrapy.Field()
+    publish_time = scrapy.Field()
+    zone = scrapy.Field()
+    content = scrapy.Field()
