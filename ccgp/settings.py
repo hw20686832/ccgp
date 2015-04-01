@@ -15,3 +15,10 @@ NEWSPIDER_MODULE = 'ccgp.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ccgp (+http://www.yourdomain.com)'
+ITEM_PIPELINES = {'ccgp.pipelines.CcgpPipeline': 300}
+
+REDIS = {'host': 'localhost', 'port': 6379, 
+         'db': 0}
+
+DATABASE = {'host': 'localhost', 'database': 'admin', 
+            'user': 'admin', 'password': '1qa2ws#ed'}

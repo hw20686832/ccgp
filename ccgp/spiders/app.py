@@ -5,6 +5,8 @@ import scrapy
 from scrapy.utils.response import get_base_url
 from scrapy.utils.url import urljoin_rfc
 
+from ccgp.items import CcgpItem
+
 
 class AppSpider(scrapy.Spider):
     name = "app"
@@ -19,10 +21,18 @@ class AppSpider(scrapy.Spider):
             next_page = "http://www.ccgp.gov.cn/cggg/dfgg/index_%d.htm" % (int(cur) + 1)
             yield scrapy.Request(next_page)
 
-        details = response.xpath("//ul[@class='ulst']/li/a/@href").extract()
-        for detail in details:
-            yield scrapy.Request(urljoin_rfc(get_base_url(response), detail), self.parse_detail)
+        detail_list = response.xpath("//ul[@class='ulst']/li")
+        for detail_li in detail_list:
+            url = detail_li.xpath("./a/@href").extract()[0]
+            item = CcgpItem()
+            item['title'] = detail_li.xpath("./a/@title").extract()[0]
+            item['publish_time'] = detail_li.xpath("./span[2]/text()").extract()[0]
+            item['zone'] = detail_li.xpath("./span[3]/text()").extract()[0]
+            request = scrapy.Request(urljoin_rfc(get_base_url(response), url), self.parse_detail)
+            request.meta['item'] = item
+            yield request
 
     def parse_detail(self, response):
-        title, = response.xpath("//h2[@class='tc']/text()").extract()
-        print title
+        item = response.meta['item']
+        item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()
+        return item
