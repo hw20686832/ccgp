@@ -34,5 +34,5 @@ class AppSpider(scrapy.Spider):
 
     def parse_detail(self, response):
         item = response.meta['item']
-        item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()
+        item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
         return item
