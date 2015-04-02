@@ -20,8 +20,8 @@ class CcgpPipeline(object):
 
     def process_item(self, item, spider):
         if not self.redis.sismember('base', item['url']):
-            base_id = self.db.insert("insert into base(title, zone, content, publish_time) values(%s, %s, %s, %s)", 
-                                     item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'])
+            base_id = self.db.insert("insert into base(url, title, zone, content, publish_time) values(%s, %s, %s, %s, %s)", 
+                                     item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'])
             if base_id:
                 for atts in item['attachments']:
                     response = requests.get(atts['url'])
