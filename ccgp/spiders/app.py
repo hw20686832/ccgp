@@ -40,7 +40,7 @@ class AppSpider(scrapy.Spider):
         atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf')]")
         for att in atts:
             attach = {}
-            attach['url'] = urljoin_rfc(get_base_url(response), att.xpath("./@href").extract()[0])
+            attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", att.xpath("./@href").extract()[0])
             attach['name'] = att.xpath("./text()").extract()[0]
             attachments.append(attach)
         item['attachments'] = attachments
