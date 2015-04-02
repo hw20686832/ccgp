@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+from urlpasre import urljoin
 
 import scrapy
 from scrapy.utils.response import get_base_url
@@ -40,7 +41,7 @@ class AppSpider(scrapy.Spider):
         atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf')]")
         for att in atts:
             attach = {}
-            attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", att.xpath("./@href").extract()[0])
+            attach['url'] = urljoin("http://www.gdgpo.gov.cn/", att.xpath("./@href").extract()[0])
             attach['name'] = att.xpath("./text()").extract()[0]
             attachments.append(attach)
         item['attachments'] = attachments
