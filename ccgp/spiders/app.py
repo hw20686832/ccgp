@@ -43,5 +43,5 @@ class AppSpider(scrapy.Spider):
             attach['url'] = urljoin_rfc(get_base_url(response), att.xpath("./@href").extract()[0])
             attach['name'] = att.xpath("./text()").extract()[0]
             attachments.append(attach)
-        item['attachment'] = attachments
+        item['attachments'] = attachments
         return item        
