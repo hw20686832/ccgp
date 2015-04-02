@@ -26,4 +26,4 @@ class CcgpPipeline(object):
                 response = requests.get(atts['url'])
                 self.db.insert("insert into attachments values(%s, %s, %s, %s)", 
                                atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
-        return rs
+        return base_id
