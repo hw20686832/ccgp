@@ -34,5 +34,14 @@ class AppSpider(scrapy.Spider):
 
     def parse_detail(self, response):
         item = response.meta['item']
+        item['url'] = response.url
         item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
-        return item
+        attachments = []
+        atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf')]")
+        for att in atts:
+            attach = {}
+            attach['url'] = urljoin_rfc(get_base_url(response), att.xpath("./@href").extract()[0])
+            attach['name'] = att.xpath("./text()").extract()[0]
+            attachments.append(attach)
+        item['attachment'] = attachments
+        return item        

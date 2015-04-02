@@ -6,6 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import redis
 import torndb
+import requests
 
 
 class CcgpPipeline(object):
@@ -18,6 +19,11 @@ class CcgpPipeline(object):
         return cls(settings)
 
     def process_item(self, item, spider):
-        rs = self.db.insert("insert into base(title, zone, content, publish_time) values(%s, %s, %s, %s)", 
+        base_id = self.db.insert("insert into base(title, zone, content, publish_time) values(%s, %s, %s, %s)", 
                             item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'])
+        if base_id:
+            for atts in item['attachments']:
+                response = requests.get(atts['url'])
+                self.db.insert("insert into attachments values(%s, %s, %s, %s)", 
+                               atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
         return rs
