@@ -40,7 +40,7 @@ $(document).ready(function() {
             {
                 'data': 'atts',
                 'render': function ( data, type, full, meta ) {
-                    var htms = array();
+                    var htms = new Array();
                     data.split('###').forEach(function(item) {
                         var atts = item.split('##');
                         htms.put("<a href='/download?aid="+atts[1]+"' target='_blank'>"+atts[0]+"</a>");
