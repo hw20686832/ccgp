@@ -24,9 +24,12 @@ class CcgpPipeline(object):
                                      item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'])
             if base_id:
                 for atts in item['attachments']:
-                    response = requests.get(atts['url'])
-                    self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
-                                   atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                    try:
+                        response = requests.get(atts['url'])
+                        self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
+                                       atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                    except Exception as e:
+                        continue
 
             self.redis.sadd('base', item['url'])
             return base_id
