@@ -43,7 +43,7 @@ $(document).ready(function() {
                     var htms = new Array();
                     data.split('###').forEach(function(item) {
                         var atts = item.split('##');
-                        htms.put("<a href='/download?aid="+atts[1]+"' target='_blank'>"+atts[0]+"</a>");
+                        htms.push("<a href='/download?aid="+atts[1]+"' target='_blank'>"+atts[0]+"</a>");
                     });
                     return htms.join('<br />');
                 }
