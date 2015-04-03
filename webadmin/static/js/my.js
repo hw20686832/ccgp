@@ -22,7 +22,12 @@ $(document).ready(function() {
         },
         "columns": [
             {'data': 'id'},
-            {'data': 'title'},
+            {
+                'data': 'title',
+                'render': function ( data, type, full, meta ) {
+                    return '<a href="/detail?bid='+full['id']+'" target="_blank">data</a>';
+                }
+            },
             {'data': 'zone'},
             {'data': 'publish_time'},
             {
