@@ -37,12 +37,6 @@ $(document).ready(function() {
                 }
             },
             {
-                'data': 'id',
-                'render': function ( data, type, full, meta ) {
-                    return '<a href="/detail?bid='+data+'" target="_blank">打开</a>';
-                }
-            },
-            {
                 'data': 'atts',
                 'render': function ( data, type, full, meta ) {
                     var htms = new Array();
