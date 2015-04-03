@@ -9,10 +9,11 @@ from tornado.web import Application
 from tornado.options import options
 
 import webapp
+import settings
 
 
 class MyApplication(Application):
-    def __init__(self, settings):
+    def __init__(self):
         handlers = [
             (r"/", webapp.IndexHandler),
         ]
@@ -30,11 +31,11 @@ class MyApplication(Application):
         self.db = torndb.Connection(**settings.DATABASE)
 
 
-def run(config):
+def run():
     options.parse_command_line()
 
-    http_server = HTTPServer(MyApplication(config))
-    http_server.listen(port=config.PORT, address=config.HOST)
+    http_server = HTTPServer(MyApplication())
+    http_server.listen(port=settings.PORT, address=settings.HOST)
 
     IOLoop.instance().start()
 
