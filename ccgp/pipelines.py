@@ -27,7 +27,7 @@ class CcgpPipeline(object):
                     try:
                         response = requests.get(atts['url'])
                         self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
-                                       atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                                       atts['url'].encode('utf-8'), base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
                     except Exception as e:
                         continue
 
