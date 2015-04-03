@@ -16,6 +16,9 @@ class MyApplication(Application):
     def __init__(self):
         handlers = [
             (r"/", webapp.IndexHandler),
+            (r"/list", webapp.ListHandler),
+            (r"/detail", webapp.DetailHandler),
+            (r"/download", webapp.DownloadHandler)
         ]
         config = dict(
             template_path=os.path.join(os.path.dirname(__file__), settings.TEMPLATE_ROOT),

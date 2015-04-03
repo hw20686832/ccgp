@@ -16,6 +16,10 @@ class BaseHandler(RequestHandler):
 
 class IndexHandler(BaseHandler):
     def get(self):
+        self.render("index.html")
+
+class ListHandler(BaseHandler):
+    def get(self):
         page_size = self.get_argument("length", 30)
         draw = self.get_argument('draw', 1)
         start = self.get_argument("start", 0)
@@ -35,3 +39,19 @@ class IndexHandler(BaseHandler):
                   'recordsTotal': total, 'data': data}
 
         self.write(json.dumps(result))
+
+
+class DetailHandler(BaseHandler):
+    def get(self):
+        bid = self.get_argument("bid")
+        item = self.db.query('select content from base where id = %s', bid)
+        self.render("detail.html", item[0])
+
+
+class DownloadHandler(BaseHandler):
+    def get(self):
+        aid = self.get_argument("aid")
+        item = self.db.query('select name, file from attachments where id = %s', aid)
+        self.set_header('Content-Type', 'application/octet-stream; charset="utf-8"')
+        self.set_header('Content-Disposition', 'attachment; filename="%s"' % item[0]['name'])
+        self.write(item[0]['file'])
