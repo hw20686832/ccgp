@@ -35,9 +35,9 @@ class MyApplication(Application):
 
 
 def run():
-    options.parse_command_line()
     define("host", default=settings.HOST, help="Served host")
     define("port", default=settings.PORT, help="Served port", type=int)
+    options.parse_command_line()
     http_server = HTTPServer(MyApplication())
     http_server.listen(port=options.host, address=options.port)
 
