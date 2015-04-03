@@ -37,11 +37,11 @@ class AppSpider(scrapy.Spider):
         item['url'] = response.url
         item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
         attachments = []
-        atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf')]")
+        atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf') or contains(@href, '.zip') or contains(@href, '.rar')]")
         for att in atts:
             attach = {}
             attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", att.xpath("./@href").extract()[0])
-            attach['name'] = att.xpath("./text()").extract()[0]
+            attach['name'] = attach['url'].rsplit('/', 1)[1]
             attachments.append(attach)
         item['attachments'] = attachments
-        return item        
+        return item
