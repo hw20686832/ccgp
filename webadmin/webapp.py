@@ -35,7 +35,7 @@ class ListHandler(BaseHandler):
         ORDER BY b.publish_time DESC
         LIMIT %s , %s
         """
-        data = self.db.query(raw_sql, int(start), int(start)+int(page_size))
+        data = self.db.query(raw_sql, int(start), int(page_size))
         result = {'draw': draw, 'recordsFiltered': total,
                   'recordsTotal': total, 'data': data}
 
