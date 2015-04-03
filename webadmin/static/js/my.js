@@ -25,7 +25,7 @@ $(document).ready(function() {
             {
                 'data': 'title',
                 'render': function ( data, type, full, meta ) {
-                    return '<a href="/detail?bid='+full['id']+'" target="_blank">data</a>';
+                    return '<a href="/detail?bid='+full['id']+'" target="_blank">'+data+'</a>';
                 }
             },
             {'data': 'zone'},
