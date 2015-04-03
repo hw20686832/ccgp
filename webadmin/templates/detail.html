@@ -20,86 +20,15 @@
   </head>
   <body>
 
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">admin</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a class="active" href="/">爬虫报告</a></li>
-        <li><a href="/purchase">付费购买</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
 <div class="container">
     <div class="page-header well well-small">
-      <h3>app list</h3>
-      <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-          <select id='data_type'>
-            <option value='all' selected>All</option>
-            <option value='new'>New</option>
-            <option value='updated'>Update</option>
-            <option value='missing'>Missing</option>
-          </select>
-        </div>
-        <form id="fm" method="get" action="/app">
-        <div class="col-md-4">
-          <div class="input-group date" id="dp">
-              <input class="form-control input-mi" type="text" value="">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-          </div>
-        </div>
-        </form>
-      </div><!-- end of row -->
+      <h5>{{ item['title'] }}</h5>
+      <small><span>发布时间: {{ item['publish_time'] }}</span><span>地区: {{ item['zone'] }}</span></small>
     </div><!-- end of header -->
-
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#hot" role="tab" data-toggle="tab">热门</a></li>
-      <li role="presentation"><a href="#full" id='download_tab' role="tab" data-toggle="tab">全量</a></li>
-    </ul>
-    <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="hot">
-      <table class="table table-hover" id="main_tb" width="100%" display="">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Version</th>
-          <th>Group</th>
-          <th>Status</th>
-          <th>APK</th>
-        </tr>
-      </thead>
-      </table>
+    <div class='content'>
+    {{ item['content'] }}
     </div>
-    <div role="tabpanel" class="tab-pane" id="full">
-      <table class="table table-hover" id="full_tb" width="100%" display="">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Version</th>
-          <th>Group</th>
-          <th>Status</th>
-          <th>APK</th>
-        </tr>
-      </thead>
-      </table>
-    </div>
-  </div>
+</div>
 </body>
 </html>
 <script src="{{ static_url('js/jquery.min.js') }}"></script>

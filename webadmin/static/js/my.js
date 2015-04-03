@@ -15,13 +15,13 @@ $(document).ready(function() {
     var dt = $('#main_tb').dataTable({
         "serverSide": true,
         "stateSave": true,
-        "ordering": true,
+        "ordering": false,
+        "searching": true,
         "pageLength": 25,
         "ajax": {
             "url": "/list"
         },
         "columns": [
-            {'data': 'id'},
             {
                 'data': 'title',
                 'render': function ( data, type, full, meta ) {
