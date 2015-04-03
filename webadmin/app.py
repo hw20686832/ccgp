@@ -6,7 +6,7 @@ import torndb
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from tornado.web import Application
-from tornado.options import options
+from tornado.options import options, define
 
 import webapp
 import settings
@@ -36,9 +36,10 @@ class MyApplication(Application):
 
 def run():
     options.parse_command_line()
-
+    define("host", default=settings.HOST, help="Served host")
+    define("port", default=settings.PORT, help="Served port", type=int)
     http_server = HTTPServer(MyApplication())
-    http_server.listen(port=settings.PORT, address=settings.HOST)
+    http_server.listen(port=options.host, address=options.port)
 
     IOLoop.instance().start()
 
