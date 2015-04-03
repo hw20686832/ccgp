@@ -22,7 +22,7 @@ class IndexHandler(BaseHandler):
         total = self.db.query("select count(1) as cnt from base")[0]['cnt']
 
         raw_sql = """
-        SELECT b.* , group_concat( a.id ) AS atts
+        SELECT b.id, b.title, b.zone, b.publish_time, b.url, group_concat( a.name ) AS atts
         FROM base AS b
         INNER JOIN attachments AS a ON b.id = a.base_id
         GROUP BY b.id
