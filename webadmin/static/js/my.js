@@ -23,7 +23,7 @@ $(document).ready(function() {
         "columns": [
             {
                 'data': 'title',
-                'width': '40%',
+                'width': '45%',
                 'render': function ( data, type, full, meta ) {
                     return '<a href="/detail?bid='+full['id']+'" target="_blank">'+data+'</a>';
                 }
