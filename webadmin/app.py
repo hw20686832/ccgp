@@ -39,7 +39,7 @@ def run():
     define("port", default=settings.PORT, help="Served port", type=int)
     options.parse_command_line()
     http_server = HTTPServer(MyApplication())
-    http_server.listen(port=options.host, address=options.port)
+    http_server.listen(address=options.host, port=options.port)
 
     IOLoop.instance().start()
 
