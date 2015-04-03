@@ -16,7 +16,6 @@ $(document).ready(function() {
         "serverSide": true,
         "stateSave": true,
         "ordering": false,
-        "searching": true,
         "pageLength": 25,
         "ajax": {
             "url": "/list"
