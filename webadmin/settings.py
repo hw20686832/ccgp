@@ -1,5 +1,5 @@
-HOST = '0.0.0.0'
-PORT = 6000
+HOST = 'localhost'
+PORT = 8000
 DEBUG = False
 
 TEMPLATE_ROOT = 'templates'

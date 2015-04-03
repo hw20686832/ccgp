@@ -38,6 +38,7 @@ $(document).ready(function() {
             },
             {
                 'data': 'atts',
+                'width': '18%',
                 'render': function ( data, type, full, meta ) {
                     var htms = new Array();
                     data.split('###').forEach(function(item) {
