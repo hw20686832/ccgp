@@ -18,6 +18,7 @@ class IndexHandler(BaseHandler):
     def get(self):
         self.render("index.html")
 
+
 class ListHandler(BaseHandler):
     def get(self):
         page_size = self.get_argument("length", 30)
@@ -29,7 +30,7 @@ class ListHandler(BaseHandler):
         SELECT b.id, b.title, b.zone, b.publish_time, b.url, group_concat( concat_ws( '##', a.name, a.id )
         SEPARATOR '###' ) AS atts
         FROM base AS b
-        INNER JOIN attachments AS a ON b.id = a.base_id
+        LEFT JOIN attachments AS a ON b.id = a.base_id
         GROUP BY b.id
         ORDER BY b.publish_time DESC
         LIMIT %s , %s
