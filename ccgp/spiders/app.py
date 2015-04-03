@@ -44,6 +44,7 @@ class AppSpider(scrapy.Spider):
             try:
                 url = urljoin_rfc("http://cpms.ccgp.gov.cn", att_url[att_url.index('/UploadFiles'):])
             except:
+                url = att_url
                 if att_url.startswith('/gdgpms'):
                     url = urljoin_rfc("http://www.gdgpo.gov.cn/", att_url)
                 if att_url.startswith('/henan/rootfiles'):
