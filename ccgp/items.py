@@ -17,6 +17,7 @@ class CcgpItem(scrapy.Item):
     zone = scrapy.Field()
     content = scrapy.Field()
     attachments = scrapy.Field()
+    source = scrapy.Field()
 
     def __str__(self):
         return self['title']
