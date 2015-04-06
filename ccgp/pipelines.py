@@ -20,13 +20,21 @@ class CcgpPipeline(object):
 
     def process_item(self, item, spider):
         if not self.redis.sismember('base', item['url']):
+<<<<<<< HEAD
             base_id = self.db.insert("insert into base(url, title, zone, content, publish_time, source) values(%s, %s, %s, %s, %s, %s)", 
                                      item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'], item['source'])
+=======
+            base_id = self.db.insert("insert into base(url, title, zone, content, publish_time) values(%s, %s, %s, %s, %s)",
+                                     item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'])
+>>>>>>> 54d0ecf31a602a60eeb5fa3c2d744d0c74c28390
             if base_id:
                 for atts in item['attachments']:
-                    response = requests.get(atts['url'])
-                    self.db.insert("insert into attachments values(%s, %s, %s, %s)", 
-                                   atts['url'], base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                    try:
+                        response = requests.get(atts['url'])
+                        self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
+                                       atts['url'].encode('utf-8'), base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                    except Exception as e:
+                        continue
 
             self.redis.sadd('base', item['url'])
             return base_id

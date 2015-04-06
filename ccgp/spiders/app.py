@@ -38,11 +38,25 @@ class AppSpider(scrapy.Spider):
         item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
         item['source'] = '中国政府采购网'
         attachments = []
-        atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf')]")
+        atts = response.xpath("//a[contains(@href, '.doc') or contains(@href, '.pdf') or contains(@href, '.zip') or contains(@href, '.rar')]")
         for att in atts:
             attach = {}
-            attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", att.xpath("./@href").extract()[0])
-            attach['name'] = att.xpath("./text()").extract()[0]
+            att_url = att.xpath("./@href").extract()[0]
+            try:
+                url = urljoin_rfc("http://cpms.ccgp.gov.cn", att_url[att_url.index('/UploadFiles'):])
+            except:
+                url = att_url
+                if att_url.startswith('/gdgpms'):
+                    url = urljoin_rfc("http://www.gdgpo.gov.cn/", att_url)
+                if att_url.startswith('/henan/rootfiles'):
+                    url = urljoin_rfc("http://www.hngp.gov.cn/", att_url)
+                if att_url.startswith('/jiaozuo/rootfiles'):
+                    url = urljoin_rfc("http://www.hngp.gov.cn/", att_url)
+                if att_url.startswith('/shangqiu/rootfiles'):
+                    url = urljoin_rfc("http://www.hngp.gov.cn/", att_url)
+
+            attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", url)
+            attach['name'] = attach['url'].rsplit('/', 1)[1]
             attachments.append(attach)
         item['attachments'] = attachments
-        return item        
+        return item
