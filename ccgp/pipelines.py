@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import re
+import urllib
 from StringIO import StringIO
 from urlparse import urljoin
 
@@ -50,8 +51,9 @@ class CcgpPipeline(object):
                         response = session.post(urljoin("http://www.cqgp.gov.cn/", post_url), data=params)
                         filename = re.search('attachment; filename="(.*?)"',
                                              response.headers['content-disposition']).group(1)
+                        filename = urllib.unquote(filename)
                         self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
-                                       atts['url'].encode('utf-8'), base_id, filename.encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                                       atts['url'].encode('utf-8'), base_id, filename, torndb.MySQLdb.Binary(response.content))
                     else:
                         try:
                             response = requests.get(atts['url'])
