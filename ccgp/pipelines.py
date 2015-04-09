@@ -30,8 +30,8 @@ class CcgpPipeline(object):
     def process_item(self, item, spider):
         self.db.execute("start transaction")
         if not self.redis.sismember('base', item['url']):
-            base_id = self.db.insert("insert into base(url, title, zone, content, publish_time, source) values(%s, %s, %s, %s, %s, %s)",
-                                     item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'], item['source'])
+            base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source) values(%s, %s, %s, %s, %s, %s)",
+                                     item['category'], item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'], item['source'])
             if base_id:
                 try:
                     for atts in item['attachments']:
@@ -47,8 +47,7 @@ class CcgpPipeline(object):
                             img_url = q('form img').attr('src')
                             response = session.get(urljoin("http://www.cqgp.gov.cn/", img_url))
                             imgio = StringIO(response.content)
-                            code = vcode.analyze(imgio)
-                            params['imageString'] = code
+                            params['imageString'] = vcode.analyze(imgio)
 
                             post_url = q('form').attr('action')
                             response = session.post(urljoin("http://www.cqgp.gov.cn/", post_url), data=params)

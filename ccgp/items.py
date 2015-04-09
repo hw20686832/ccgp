@@ -15,6 +15,7 @@ class CcgpItem(scrapy.Item):
     title = scrapy.Field()
     publish_time = scrapy.Field()
     zone = scrapy.Field()
+    category = scrapy.Field()
     content = scrapy.Field()
     attachments = scrapy.Field()
     source = scrapy.Field()

@@ -28,6 +28,7 @@ class AppSpider(scrapy.Spider):
             item['title'] = detail_li.xpath("./a/@title").extract()[0]
             item['publish_time'] = detail_li.xpath("./span[2]/text()").extract()[0]
             item['zone'] = detail_li.xpath("./span[3]/text()").extract()[0]
+            item['category'] = int(detail_li.xpath("./span[1]/text()").extract()[0])
             request = scrapy.Request(urljoin_rfc(get_base_url(response), url), self.parse_detail)
             request.meta['item'] = item
             yield request
