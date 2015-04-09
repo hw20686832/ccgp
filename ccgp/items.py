@@ -19,7 +19,7 @@ class CcgpItem(scrapy.Item):
     content = scrapy.Field()
     attachments = scrapy.Field()
     source = scrapy.Field()
-    group = scrapy.Foeld()
+    group = scrapy.Field()
 
     def __str__(self):
         return self['title']
