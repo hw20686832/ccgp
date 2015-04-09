@@ -18,7 +18,7 @@ $(document).ready(function() {
         "ordering": false,
         "pageLength": 25,
         "ajax": {
-            "url": "/list"
+            "url": "/list?group=1"
         },
         "columns": [
             {
@@ -57,7 +57,7 @@ $(document).ready(function() {
         "ordering": false,
         "pageLength": 25,
         "ajax": {
-            "url": "/list"
+            "url": "/list?group=2"
         },
         "columns": [
             {
