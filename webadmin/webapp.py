@@ -25,12 +25,13 @@ class ListHandler(BaseHandler):
         group = self.get_argument("group", 1)
         draw = self.get_argument('draw', 1)
         start = self.get_argument("start", 0)
-        total = self.db.query("select count(1) as cnt from base where category in ("+','.join(cates)+")")[0]['cnt']
 
         if int(group) == 1:
             cates = ('979', '1001', '974', '998', '976', '996', '978', '1000', '977', '999', '984', '1006', '985', '1007', '975', '997')
         else:
             cates = ('982', '1004', '981', '1003', '990', '1012')
+
+        total = self.db.query("select count(1) as cnt from base where category in ("+','.join(cates)+")")[0]['cnt']
 
         raw_sql = """
         SELECT b.id, b.title, b.zone, b.publish_time, b.url, group_concat( concat_ws( '##', a.name, a.id )
