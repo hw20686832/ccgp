@@ -31,7 +31,7 @@ class CcgpPipeline(object):
         self.db.execute("start transaction")
         if not self.redis.sismember('base', item['url']):
             base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source) values(%s, %s, %s, %s, %s, %s, %s)",
-                                     item['category'], item['url'], item['title'].encode('utf-8'), item['zone'].encode('utf-8'), item['content'].encode('utf-8'), item['publish_time'], item['source'])
+                                     item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'])
             if base_id:
                 try:
                     for atts in item['attachments']:
@@ -55,11 +55,11 @@ class CcgpPipeline(object):
                                                  response.headers['content-disposition']).group(1)
                             filename = urllib.unquote(filename)
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
-                                           atts['url'].encode('utf-8'), base_id, filename, torndb.MySQLdb.Binary(response.content))
+                                           atts['url'], base_id, filename, torndb.MySQLdb.Binary(response.content))
                         else:
                             response = requests.get(atts['url'])
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
-                                           atts['url'].encode('utf-8'), base_id, atts['name'].encode('utf-8'), torndb.MySQLdb.Binary(response.content))
+                                           atts['url'], base_id, atts['name'], torndb.MySQLdb.Binary(response.content))
                 except Exception as e:
                     traceback.print_exc()
                     self.db.execute("rollback")

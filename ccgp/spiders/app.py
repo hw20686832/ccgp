@@ -37,7 +37,7 @@ class AppSpider(scrapy.Spider):
         item = response.meta['item']
         item['url'] = response.url
         item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
-        item['source'] = '中国政府采购网'
+        item['source'] = u'中国政府采购网'
         attachments = []
         atts = response.xpath(
             "//a[contains(@href, '.doc') or contains(@href, '.pdf') or contains(@href, '.zip') or contains(@href, '.rar') or contains(@href, '/documentView.do?method=downFile')]")
