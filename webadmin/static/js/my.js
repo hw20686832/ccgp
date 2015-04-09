@@ -22,16 +22,23 @@ $(document).ready(function() {
         },
         "columns": [
             {
+                'data': 'zone',
+                'width': '9%'
+            },
+            {
                 'data': 'title',
                 'width': '50%',
                 'render': function ( data, type, full, meta ) {
                     return '<a href="/detail?bid='+full['id']+'" target="_blank">'+data+'</a>';
                 }
             },
-            {'data': 'zone'},
-            {'data': 'publish_time'},
+            {
+                'data': 'publish_time',
+                'width': '14%'
+            },
             {
                 'data': 'url',
+                'width': '9%',
                 'render': function ( data, type, full, meta ) {
                     return '<a href="'+data+'" target="_blank">访问</a>';
                 }
@@ -61,16 +68,23 @@ $(document).ready(function() {
         },
         "columns": [
             {
+                'data': 'zone',
+                'width': '9%'
+            },
+            {
                 'data': 'title',
                 'width': '50%',
                 'render': function ( data, type, full, meta ) {
                     return '<a href="/detail?bid='+full['id']+'" target="_blank">'+data+'</a>';
                 }
             },
-            {'data': 'zone'},
-            {'data': 'publish_time'},
+            {
+                'data': 'publish_time',
+                'width': '14%'
+            },
             {
                 'data': 'url',
+                'width': '9%',
                 'render': function ( data, type, full, meta ) {
                     return '<a href="'+data+'" target="_blank">访问</a>';
                 }
