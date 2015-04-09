@@ -13,7 +13,10 @@ class AppSpider(scrapy.Spider):
     allowed_domains = ["ccgp.gov.cn"]
     start_urls = (
         'http://www.ccgp.gov.cn/cggg/dfgg/index.htm',
+        'http://www.ccgp.gov.cn/cggg/zygg/index.htm'
     )
+    group_1 = (979, 1001, 974, 998, 976, 996, 978, 1000, 977, 999, 984, 1006, 985, 1007, 975, 997)
+    group_2 = (982, 1004, 981, 1003, 990, 1012)
 
     def parse(self, response):
         total, cur = re.search("Pager\(\{size:(\d+), current:(\d+), prefix:'index',suffix:'htm'\}\);", response.body).groups()
@@ -29,6 +32,10 @@ class AppSpider(scrapy.Spider):
             item['publish_time'] = detail_li.xpath("./span[2]/text()").extract()[0]
             item['zone'] = detail_li.xpath("./span[3]/text()").extract()[0]
             item['category'] = int(detail_li.xpath("./span[1]/text()").extract()[0])
+            if item['category'] in self.group_1:
+                item['group'] = 'group_1'
+            else:
+                item['group'] = 'group_2'
             request = scrapy.Request(urljoin_rfc(get_base_url(response), url), self.parse_detail)
             request.meta['item'] = item
             yield request
