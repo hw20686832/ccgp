@@ -65,7 +65,10 @@ class AppSpider(scrapy.Spider):
                     url = urljoin_rfc("http://www.hngp.gov.cn/", att_url)
 
             attach['url'] = urljoin_rfc("http://www.gdgpo.gov.cn/", url)
-            attach['name'] = attach['url'].rsplit('/', 1)[1]
+            if "bulletin_zz.do?method=downloadFile" in attach['url']:
+                attach['name'] = re.search("&file_name=(.*)$", attach['url']).group(1)
+            else:
+                attach['name'] = attach['url'].rsplit('/', 1)[1]
             attachments.append(attach)
         item['attachments'] = attachments
         return item
