@@ -30,8 +30,8 @@ class CcgpPipeline(object):
     def process_item(self, item, spider):
         self.db.execute("start transaction")
         if not self.redis.sismember('base', item['url']):
-            base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source) values(%s, %s, %s, %s, %s, %s, %s)",
-                                     item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'])
+            base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source, sn) values(%s, %s, %s, %s, %s, %s, %s, %s)",
+                                     item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'], item['sn'])
             if base_id:
                 try:
                     for atts in item['attachments']:
