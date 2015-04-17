@@ -5,6 +5,7 @@ import datetime
 import scrapy
 from scrapy.utils.response import get_base_url
 from scrapy.utils.url import urljoin_rfc
+from pyquery import PyQuery as _Q
 
 from ccgp.items import CcgpItem
 
@@ -43,10 +44,16 @@ class AppSpider(scrapy.Spider):
             yield request
 
     def parse_detail(self, response):
+        q = _Q(response.body_as_unicode())
+        content = q('div.vT_detail_content.w760c').text()
         item = response.meta['item']
         item['url'] = response.url
         item['content'] = response.xpath("//div[@class='vT_detail_content w760c']").extract()[0]
         item['source'] = u'中国政府采购网'
+        try:
+            item['sn'] = re.search(u".*编号：\s?(.*?)[\s|；|;|,|\.|，|。|<|\]|］|\)|）]", content).group(1)
+        except:
+            item['sn'] = ''
         attachments = []
         atts = response.xpath(
             "//a[contains(@href, '.doc') or contains(@href, '.pdf') or contains(@href, '.zip') or contains(@href, '.rar') or contains(@href, '/documentView.do?method=downFile')]")
