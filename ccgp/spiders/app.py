@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import datetime
 
 import scrapy
 from scrapy.utils.response import get_base_url
@@ -29,7 +30,8 @@ class AppSpider(scrapy.Spider):
             url = detail_li.xpath("./a/@href").extract()[0]
             item = CcgpItem()
             item['title'] = detail_li.xpath("./a/@title").extract()[0]
-            item['publish_time'] = detail_li.xpath("./span[2]/text()").extract()[0]
+            # item['publish_time'] = detail_li.xpath("./span[2]/text()").extract()[0]
+            item['publish_time'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             item['zone'] = detail_li.xpath("./span[3]/text()").extract()[0]
             item['category'] = int(detail_li.xpath("./span[1]/text()").extract()[0])
             if item['category'] in self.group_1:

@@ -17,8 +17,8 @@ NEWSPIDER_MODULE = 'ccgp.spiders'
 #USER_AGENT = 'ccgp (+http://www.yourdomain.com)'
 ITEM_PIPELINES = {'ccgp.pipelines.CcgpPipeline': 300}
 
-REDIS = {'host': 'localhost', 'port': 6379, 
+REDIS = {'host': 'localhost', 'port': 6379,
          'db': 0}
 
-DATABASE = {'host': 'localhost', 'database': 'admin', 
+DATABASE = {'host': 'localhost', 'database': 'admin',
             'user': 'admin', 'password': '1qa2ws#ed'}
