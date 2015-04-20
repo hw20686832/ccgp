@@ -65,6 +65,8 @@ class CcgpPipeline(object):
                                     atts['name'] = urllib.unquote(filename)
                                 except:
                                     print response.headers
+                                    print atts['url']
+                                    print response.url
                                     raise
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
                                            atts['url'], base_id, atts['name'], torndb.MySQLdb.Binary(response.content))
