@@ -22,6 +22,7 @@ class CcgpPipeline(object):
     def __init__(self, settings):
         self.redis = redis.Redis(**settings.get('REDIS'))
         self.db = torndb.Connection(**settings.get('DATABASE'))
+        self.settings = settings
 
     @classmethod
     def from_settings(cls, settings):
@@ -57,7 +58,9 @@ class CcgpPipeline(object):
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
                                            atts['url'], base_id, filename, torndb.MySQLdb.Binary(response.content))
                         else:
-                            response = requests.get(atts['url'])
+                            headers = self.settings.get("DEFAULT_REQUEST_HEADERS")
+                            headers['Referer'] = item['url']
+                            response = requests.get(atts['url'], headers=headers)
                             if item['source'] == u'惠州市公共资源交易中心':
                                 filename = re.search('attachment; filename=(.*?)',
                                                      response.headers['content-disposition']).group(1)
