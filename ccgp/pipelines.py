@@ -59,7 +59,7 @@ class CcgpPipeline(object):
                         else:
                             response = requests.get(atts['url'])
                             if item['source'] == u'惠州市公共资源交易中心':
-                                filename = re.search('attachment; filename="(.*?)"',
+                                filename = re.search('attachment; filename=(.*?)',
                                                      response.headers['content-disposition']).group(1)
                                 atts['name'] = urllib.unquote(filename)
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
