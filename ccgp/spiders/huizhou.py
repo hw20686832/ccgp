@@ -14,7 +14,7 @@ class HuizhouSpider(scrapy.Spider):
     name = "huizhou"
     allowed_domains = ["ccgp.gov.cn"]
     start_urls = (
-        'http://zyjy.huizhou.gov.cn/pages/cms/hzggzyjyzx/html/artList.html?cataId=11d8ed160d2e437590964a4c47db8cfe, '
+        'http://zyjy.huizhou.gov.cn/pages/cms/hzggzyjyzx/html/artList.html?cataId=11d8ed160d2e437590964a4c47db8cfe',
     )
 
     cate_map = {'d1906435886c4ee188887bc8297606ed': 990,
