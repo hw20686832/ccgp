@@ -53,7 +53,7 @@ class ListHandler(BaseHandler):
 class DetailHandler(BaseHandler):
     def get(self):
         bid = self.get_argument("bid")
-        item = self.db.query('select title, publish_time, zone, content from base where id = %s', bid)
+        item = self.db.query('select title, publish_time, zone, content, source from base where id = %s', bid)
         self.render("detail.html", item=item[0])
 
 
