@@ -12,7 +12,7 @@ from ccgp.items import CcgpItem
 
 class HuizhouSpider(scrapy.Spider):
     name = "huizhou"
-    allowed_domains = ["ccgp.gov.cn"]
+    allowed_domains = ["huizhou.gov.cn"]
     start_urls = (
         'http://zyjy.huizhou.gov.cn/pages/cms/hzggzyjyzx/html/artList.html?cataId=11d8ed160d2e437590964a4c47db8cfe',
     )
