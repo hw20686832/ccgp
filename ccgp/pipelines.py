@@ -60,7 +60,6 @@ class CcgpPipeline(object):
                         else:
                             headers = self.settings.get("DEFAULT_REQUEST_HEADERS")
                             headers['Referer'] = item['url']
-                            headers['Host'] = '183.63.34.151:8888'
                             response = requests.get(atts['url'], headers=headers)
                             if item['source'] == u'惠州市公共资源交易中心':
                                 filename = re.search('attachment; filename=(.*?)',
