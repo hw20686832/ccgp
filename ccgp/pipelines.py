@@ -66,10 +66,12 @@ class CcgpPipeline(object):
                                 session.headers = headers
                                 session.get(item['url'])
                                 response = session.get(atts['url'])
-                                filename = re.search('attachment; filename=(.*?)',
-                                                     response.headers['content-disposition']).group(1)
-                                atts['name'] = urllib.unquote(filename)
-
+                                try:
+                                    filename = re.search('attachment; filename=(.*?)',
+                                                         response.headers['content-disposition']).group(1)
+                                    atts['name'] = urllib.unquote(filename)
+                                except:
+                                    continue
                             else:
                                 response = requests.get(atts['url'], headers=headers)
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
