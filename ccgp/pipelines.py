@@ -60,11 +60,18 @@ class CcgpPipeline(object):
                         else:
                             headers = self.settings.get("DEFAULT_REQUEST_HEADERS")
                             headers['Referer'] = item['url']
-                            response = requests.get(atts['url'], headers=headers)
                             if item['source'] == u'惠州市公共资源交易中心':
+                                headers['Host'] = '183.63.34.151:8888'
+                                session = requests.Session()
+                                session.headers = headers
+                                session.get(item['url'])
+                                response = session.get(atts['url'])
                                 filename = re.search('attachment; filename=(.*?)',
                                                      response.headers['content-disposition']).group(1)
                                 atts['name'] = urllib.unquote(filename)
+
+                            else:
+                                response = requests.get(atts['url'], headers=headers)
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
                                            atts['url'], base_id, atts['name'], torndb.MySQLdb.Binary(response.content))
                 except Exception as e:
