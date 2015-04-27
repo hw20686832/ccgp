@@ -36,8 +36,9 @@ class CcgpPipeline(object):
                 if t.attrib.get('width'):
                     t.set('width', '')
             for n in cnt("*"):
-                if t.attrib.get('style'):
-                    t.set('style', '')
+                if n.attrib.get('style'):
+                    n.set('style', '')
+
             item['content'] = str(cnt)
             base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source, sn) values(%s, %s, %s, %s, %s, %s, %s, %s)",
                                      item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'], item['sn'])
