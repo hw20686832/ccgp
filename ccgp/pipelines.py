@@ -31,6 +31,14 @@ class CcgpPipeline(object):
     def process_item(self, item, spider):
         self.db.execute("start transaction")
         if not self.redis.sismember('base', item['url']):
+            cnt = _Q(item['content'])
+            for t in cnt('table'):
+                if t.attrib.get('width'):
+                    t.set('width', '')
+            for n in cnt("*"):
+                if t.attrib.get('style'):
+                    t.set('style', '')
+            item['content'] = str(cnt)
             base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source, sn) values(%s, %s, %s, %s, %s, %s, %s, %s)",
                                      item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'], item['sn'])
             if base_id:
