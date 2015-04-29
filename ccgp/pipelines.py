@@ -39,7 +39,7 @@ class CcgpPipeline(object):
                 if n.attrib.get('style'):
                     n.set('style', '')
 
-            item['content'] = str(cnt)
+            item['content'] = cnt.outerHtml()
             base_id = self.db.insert("insert into base(category, url, title, zone, content, publish_time, source, sn) values(%s, %s, %s, %s, %s, %s, %s, %s)",
                                      item['category'], item['url'], item['title'], item['zone'], item['content'], item['publish_time'], item['source'], item['sn'])
             if base_id:
@@ -66,6 +66,13 @@ class CcgpPipeline(object):
                             filename = urllib.unquote(filename)
                             self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
                                            atts['url'], base_id, filename, torndb.MySQLdb.Binary(response.content))
+                        elif 'CmsNewsController.do' in atts['url']:
+                            response = requests.get(atts['url'])
+                            filename = re.search('attachment; filename=(.*?)',
+                                                 response.headers['content-disposition']).group(1)
+                            atts['name'] = urllib.unquote(filename)
+                            self.db.insert("insert into attachments(url, base_id, name, file) values(%s, %s, %s, %s)",
+                                           atts['url'], base_id, atts['name'], torndb.MySQLdb.Binary(response.content))
                         else:
                             headers = self.settings.get("DEFAULT_REQUEST_HEADERS")
                             headers['Referer'] = item['url']
