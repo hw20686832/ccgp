@@ -22,7 +22,7 @@
       <h4>{{ item['title'] }}</h4>
       <small><span>发布时间: {{ item['publish_time'] }}</span>  <span>地区: {{ item['zone'] }}</span>
       {% if item['attach_ids'] %}
-        <span>文件下载：
+        <span class="pull-right">文件下载：
         {% for seq, id in enumerate(item['attach_ids'].split(','), start=1) %}
           <span><a href="/download?aid={{ id }}" target="_blank">附件{{ seq }}</a></span>
         {% end %}
