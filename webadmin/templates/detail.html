@@ -25,9 +25,9 @@
         <span>文件下载：
         {% for seq, id in enumerate(item['attach_ids'].split(','), start=1) %}
           <span><a href="/download?aid={{ id }}" target="_blank">附件{{ seq }}</a></span>
-        {% endfor %}
+        {% end %}
         </span>
-      {% endif %}
+      {% end %}
       </small>
     </div><!-- end of header -->
     <div class='content'>
