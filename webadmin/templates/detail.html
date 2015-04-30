@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Webadmin</title>
+    <title>标讯</title>
 
     <!-- Bootstrap -->
     <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -20,7 +20,15 @@
 <div class="container">
     <div class="page-header well well-small">
       <h4>{{ item['title'] }}</h4>
-      <small><span>发布时间: {{ item['publish_time'] }}</span>  <span>地区: {{ item['zone'] }}</span></small>
+      <small><span>发布时间: {{ item['publish_time'] }}</span>  <span>地区: {{ item['zone'] }}</span>
+      {% if item['attach_ids'] %}
+        <span>文件下载：
+        {% for seq, id in enumerate(item['attach_ids'].split(','), start=1) %}
+          <span><a href="/download?aid={{ id }}" target="_blank">附件{{ seq }}</a></span>
+        {% endfor %}
+        </span>
+      {% endif %}
+      </small>
     </div><!-- end of header -->
     <div class='content'>
     {{ item['content'] }}

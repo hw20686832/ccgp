@@ -53,7 +53,14 @@ class ListHandler(BaseHandler):
 class DetailHandler(BaseHandler):
     def get(self):
         bid = self.get_argument("bid")
-        item = self.db.query('select url, title, publish_time, zone, content from base where id = %s', bid)
+        raw_sql = """
+        SELECT b.url, b.title, b.publish_time, b.zone, b.content, GROUP_CONCAT( a.id ) as attach_ids
+        FROM base AS b
+        LEFT JOIN attachments AS a ON b.id = a.base_id
+        WHERE b.id = %s
+        GROUP BY b.id
+        """
+        item = self.db.query(raw_sql, bid)
         self.render("detail.html", item=item[0])
 
 
