@@ -36,9 +36,9 @@ class AppSpider(scrapy.Spider):
             item['zone'] = detail_li.xpath("./span[3]/text()").extract()[0]
             item['category'] = int(detail_li.xpath("./span[1]/text()").extract()[0])
             if item['category'] in self.group_1:
-                item['group'] = 'group_1'
+                item['group'] = 0
             else:
-                item['group'] = 'group_2'
+                item['group'] = 1
             request = scrapy.Request(urljoin_rfc(get_base_url(response), url), self.parse_detail)
             request.meta['item'] = item
             yield request
